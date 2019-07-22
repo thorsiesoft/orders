@@ -1,8 +1,11 @@
 package diesel.masapp.orders.persistence;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import java.math.BigDecimal;
@@ -10,6 +13,7 @@ import java.math.BigDecimal;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@Data
 public class OrderLine {
 
     public static final String SEQUENCE_NAME = "order_line_seq";
@@ -19,8 +23,8 @@ public class OrderLine {
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_NAME, initialValue = 1, allocationSize = 1)
     private long id;
 
-    private Order order;
     private int quantity;
+    @OneToOne
     private Stock item;
     private BigDecimal lineTotal;
 }

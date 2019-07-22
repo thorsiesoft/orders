@@ -1,5 +1,7 @@
 package diesel.masapp.orders.persistence;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,6 +10,7 @@ import javax.persistence.SequenceGenerator;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@Data
 public class Customer {
 
     public static final String SEQUENCE_NAME = "customer_seq";
