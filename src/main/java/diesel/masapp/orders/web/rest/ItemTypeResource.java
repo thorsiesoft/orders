@@ -6,7 +6,6 @@ import diesel.masapp.orders.persistence.repository.ItemTypeRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -38,12 +36,11 @@ public class ItemTypeResource {
     }
 
     @GetMapping(path = "/{id}")
-    @ApiOperation("A service to get an item type that's available for order")
+    @ApiOperation("A service to get an item type that's available for order by it's id")
     public ItemType getItemType(@PathVariable final long id) {
         return itemTypeRepository.getOne(id);
     }
 
-    @CrossOrigin
     @GetMapping(path = "/")
     @ApiOperation("A service to get all item types that are available for order and optionally " +
             "filter the results based on parameters provided")
