@@ -5,9 +5,8 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-
 import java.math.BigDecimal;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -24,7 +23,7 @@ public class OrderLine {
     private long id;
 
     private int quantity;
-    @OneToOne
-    private Stock item;
+    @ManyToOne
+    private ItemType type;
     private BigDecimal lineTotal;
 }

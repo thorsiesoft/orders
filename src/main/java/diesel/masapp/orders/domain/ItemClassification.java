@@ -4,6 +4,7 @@ public enum ItemClassification {
 
     WHOLE,
     PIECES,
+    PROCESSED,
     OFFAL;
 
 }

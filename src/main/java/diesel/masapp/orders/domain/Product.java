@@ -6,5 +6,13 @@ public enum Product {
     THIGHS,
     DRUMSTICKS,
     WINGS,
-    LIVERS
+    FILLETS,
+    QUARTERS,
+    HALVES,
+    FLATTY,
+    MINCE,
+    LIVERS,
+    NECKS,
+    FEET,
+    STOMACH
 }

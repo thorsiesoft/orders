@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import java.math.BigDecimal;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -34,4 +36,6 @@ public class ItemType {
 
     private boolean availableDeboned;
     private boolean availableSkinned;
+
+    private BigDecimal price;
 }
