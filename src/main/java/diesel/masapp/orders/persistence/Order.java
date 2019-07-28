@@ -1,6 +1,7 @@
 package diesel.masapp.orders.persistence;
 
 import lombok.Data;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -29,12 +31,23 @@ public class Order {
 
     @ManyToOne
     private Customer customer;
-    private Date orderPlaced;
-    private Date orderConfirmed;
+    private LocalDateTime orderPlaced;
+    private LocalDateTime orderConfirmed;
     private BigDecimal totalAmount;
     private boolean delivered;
     private boolean paid;
 
     @OneToMany
     private List<OrderLine> lines;
+
+    public Order(final Customer customer, final LocalDateTime orderPlaced, final LocalDateTime orderConfirmed, final BigDecimal totalAmount,
+                 final boolean delivered, final boolean paid, final List<OrderLine> lines) {
+        this.customer = customer;
+        this.orderPlaced = orderPlaced;
+        this.orderConfirmed = orderConfirmed;
+        this.totalAmount = totalAmount;
+        this.delivered = delivered;
+        this.paid = paid;
+        this.lines = lines;
+    }
 }

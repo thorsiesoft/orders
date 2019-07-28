@@ -26,4 +26,10 @@ public class OrderLine {
     @ManyToOne
     private ItemType type;
     private BigDecimal lineTotal;
+
+    public OrderLine(final int quantity, final ItemType type, final BigDecimal lineTotal) {
+        this.quantity = quantity;
+        this.type = type;
+        this.lineTotal = lineTotal;
+    }
 }

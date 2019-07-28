@@ -1,9 +1,10 @@
 package diesel.masapp.orders.web.rest;
 
-import diesel.masapp.orders.persistence.Order;
+import diesel.masapp.orders.domain.SubmittedOrder;
 import diesel.masapp.orders.persistence.OrderLine;
 import diesel.masapp.orders.persistence.repository.OrderLineRepository;
 import diesel.masapp.orders.persistence.repository.OrderRepository;
+import diesel.masapp.orders.services.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,14 @@ public class OrderResource {
 
     private OrderLineRepository orderLineRepository;
     private OrderRepository orderRepository;
+    private OrderService orderService;
 
     @Autowired
-    public OrderResource(final OrderLineRepository orderLineRepository, final OrderRepository orderRepository) {
+    public OrderResource(final OrderLineRepository orderLineRepository, final OrderRepository orderRepository,
+                         final OrderService orderService) {
         this.orderLineRepository = orderLineRepository;
         this.orderRepository = orderRepository;
+        this.orderService = orderService;
     }
 
     @PostMapping(path = "/line")
@@ -35,8 +39,8 @@ public class OrderResource {
 
     @PostMapping(path = "/")
     @ApiOperation("A service to create a new order")
-    public void createOrder(final Order order) {
-        orderRepository.save(order);
+    public void createOrder(final SubmittedOrder order) {
+        orderService.createNewOrder(order);
     }
 
 }
