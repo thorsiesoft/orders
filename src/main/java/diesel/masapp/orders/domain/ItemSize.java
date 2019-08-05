@@ -10,7 +10,8 @@ public enum ItemSize {
     LARGE,
     FOUR_PACK,
     SIX_PACK,
-    FIVE_HUNDRED_GRAMS;
+    FIVE_HUNDRED_GRAMS,
+    UNASSIGNED;
 
     public static ItemSize fromString(final String itemSize) {
         Optional<ItemSize> optionalItemSize =

@@ -1,18 +1,21 @@
 package diesel.masapp.orders.persistence;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import java.math.BigDecimal;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Inventory {
 
     public static final String SEQUENCE_NAME = "inventory_seq";
@@ -25,9 +28,16 @@ public class Inventory {
     @ManyToOne
     private Batch batch;
 
-    @ManyToOne
-    private ItemType itemType;
+    @OneToOne
+    private InventoryItem item;
 
     private BigDecimal price;
     private BigDecimal weight;
+
+    public Inventory(final Batch batch, final InventoryItem item, final BigDecimal price, final BigDecimal weight) {
+        this.batch = batch;
+        this.item = item;
+        this.price = price;
+        this.weight = weight;
+    }
 }
