@@ -35,11 +35,20 @@ public class InventoryService {
         Optional<Batch> batchOptional = batchRepository.findByBatchDateAndHouseNumber(batchDate, houseNumber);
         if (batchOptional.isPresent()) {
             Batch batch = batchOptional.get();
-            InventoryItem inventoryItem = new InventoryItem(ItemClassification.valueOf(submittedInventory.getItemClassification()),
+            InventoryItem inventoryItem;
+            Optional<InventoryItem> inventoryItemOptional = inventoryItemRepository.findByClassificationAndProductAndSizeAndDebonedAndSkinned(ItemClassification.valueOf(submittedInventory.getItemClassification()),
                     Product.fromString(submittedInventory.getProductType()), ItemSize.fromString(submittedInventory.getSize()),
                     submittedInventory.isDeboned(), submittedInventory.isSkinned());
+            if (inventoryItemOptional.isPresent()) {
+                inventoryItem = inventoryItemOptional.get();
+            } else {
+                inventoryItem = new InventoryItem(ItemClassification.valueOf(submittedInventory.getItemClassification()),
+                        Product.fromString(submittedInventory.getProductType()), ItemSize.fromString(submittedInventory.getSize()),
+                        submittedInventory.isDeboned(), submittedInventory.isSkinned());
+            }
+
             InventoryItem savedInventoryItem = inventoryItemRepository.save(inventoryItem);
-            Inventory inventory = new Inventory(batch, inventoryItem, BigDecimal.ZERO, BigDecimal.ZERO);
+            Inventory inventory = new Inventory(batch, savedInventoryItem, BigDecimal.ZERO, BigDecimal.ZERO, submittedInventory.getQuantity());
             inventoryRepository.save(inventory);
         }
     }

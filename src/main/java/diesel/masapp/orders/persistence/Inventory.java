@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import java.math.BigDecimal;
 
@@ -28,16 +27,18 @@ public class Inventory {
     @ManyToOne
     private Batch batch;
 
-    @OneToOne
+    @ManyToOne
     private InventoryItem item;
 
     private BigDecimal price;
     private BigDecimal weight;
+    private int quantity;
 
-    public Inventory(final Batch batch, final InventoryItem item, final BigDecimal price, final BigDecimal weight) {
+    public Inventory(final Batch batch, final InventoryItem item, final BigDecimal price, final BigDecimal weight, final int quantity) {
         this.batch = batch;
         this.item = item;
         this.price = price;
         this.weight = weight;
+        this.quantity = quantity;
     }
 }
