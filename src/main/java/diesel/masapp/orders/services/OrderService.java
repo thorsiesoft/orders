@@ -42,14 +42,13 @@ public class OrderService {
             List<OrderLine> savedOrderLines = new ArrayList();
 
             submittedOrder.getOrders().stream().forEach(submittedOrderLine -> {
-                Optional<ItemType> itemTypeOptional = itemTypeRepository.findByProductAndSizeAndAvailableDebonedAndAvailableSkinned(
+                Optional<ItemType> itemTypeOptional = itemTypeRepository.findByProductAndSize(
                         Product.fromString(submittedOrderLine.getProduct()),
-                        ItemSize.fromString(submittedOrderLine.getSize()),
-                        submittedOrderLine.isDeboned(),
-                        submittedOrderLine.isSkinned());
+                        ItemSize.fromString(submittedOrderLine.getSize()));
 
                 if (itemTypeOptional.isPresent()) {
-                    OrderLine orderLine = new OrderLine(submittedOrderLine.getQuantity(), itemTypeOptional.get(), BigDecimal.ZERO);
+                    OrderLine orderLine = new OrderLine(submittedOrderLine.getQuantity(), itemTypeOptional.get(), BigDecimal.ZERO,
+                            submittedOrderLine.isDeboned(), submittedOrderLine.isSkinned());
                     OrderLine saveOrderLine = orderLineRepository.save(orderLine);
                     savedOrderLines.add(saveOrderLine);
                 }
@@ -58,6 +57,18 @@ public class OrderService {
             Order order = new Order(customer, LocalDateTime.now(), null, BigDecimal.ZERO, false, false,
                     savedOrderLines);
             orderRepository.save(order);
+        }
+    }
+
+    public void deleteOrderByCustomerName(final String customerName) {
+        Optional<Customer> customerOptional = customerRepository.findByName(customerName);
+        if (customerOptional.isPresent()) {
+            List<Order> customerOrders = orderRepository.findByCustomer(customerOptional.get());
+            if (!customerOrders.isEmpty()) {
+                customerOrders.stream().forEach(co -> {
+                    orderRepository.delete(co);
+                });
+            }
         }
 
     }

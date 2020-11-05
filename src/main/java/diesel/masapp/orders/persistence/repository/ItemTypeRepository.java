@@ -4,7 +4,6 @@ import diesel.masapp.orders.domain.ItemClassification;
 import diesel.masapp.orders.domain.ItemSize;
 import diesel.masapp.orders.domain.Product;
 import diesel.masapp.orders.persistence.ItemType;
-import diesel.masapp.orders.persistence.OrderLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -19,4 +18,6 @@ public interface ItemTypeRepository extends JpaRepository<ItemType, Long> {
                                                                                    ItemSize itemSize,
                                                                                    boolean availableDeboned,
                                                                                    boolean availableSkinned);
+
+    Optional<ItemType> findByProductAndSize(Product product, ItemSize itemSize);
 }

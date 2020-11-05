@@ -1,5 +1,7 @@
 package diesel.masapp.orders.services;
 
+import diesel.masapp.orders.domain.InventoryForPandas;
+import diesel.masapp.orders.domain.InventoryStore;
 import diesel.masapp.orders.domain.ItemClassification;
 import diesel.masapp.orders.domain.ItemSize;
 import diesel.masapp.orders.domain.Product;
@@ -14,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InventoryService {
@@ -48,8 +52,29 @@ public class InventoryService {
             }
 
             InventoryItem savedInventoryItem = inventoryItemRepository.save(inventoryItem);
-            Inventory inventory = new Inventory(batch, savedInventoryItem, BigDecimal.ZERO, BigDecimal.ZERO, submittedInventory.getQuantity());
+            Inventory inventory;
+            if (submittedInventory.getStore() != null) {
+                InventoryStore store = InventoryStore.valueOf(submittedInventory.getStore());
+                inventory = new Inventory(batch, savedInventoryItem, BigDecimal.valueOf(submittedInventory.getPrice()), BigDecimal.ZERO, submittedInventory.getQuantity(), store);
+            } else {
+                inventory = new Inventory(batch, savedInventoryItem, BigDecimal.valueOf(submittedInventory.getPrice()), BigDecimal.ZERO, submittedInventory.getQuantity());
+            }
+
             inventoryRepository.save(inventory);
         }
+    }
+
+    public List<InventoryForPandas> getInventoryForPandas() {
+        List<Inventory> inventories = inventoryRepository.findAll();
+        return inventories.stream().map(inventory -> {
+            InventoryForPandas inventoryForPandas = new InventoryForPandas();
+            inventoryForPandas.setBatchDate(inventory.getBatch().getBatchDate());
+            inventoryForPandas.setClassification(inventory.getItem().getClassification());
+            inventoryForPandas.setProduct(inventory.getItem().getProduct());
+            inventoryForPandas.setSize(inventory.getItem().getSize());
+            inventoryForPandas.setQuantity(inventory.getQuantity());
+            inventoryForPandas.setStore(inventory.getStore());
+            return inventoryForPandas;
+        }).collect(Collectors.toList());
     }
 }

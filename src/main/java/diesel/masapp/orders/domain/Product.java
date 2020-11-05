@@ -14,6 +14,7 @@ public enum Product {
     HALVES,
     FLATTY,
     MINCE,
+    STRIPS,
     LIVERS,
     NECKS,
     FEET,

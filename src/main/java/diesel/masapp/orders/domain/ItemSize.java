@@ -8,8 +8,12 @@ public enum ItemSize {
     SMALL,
     MEDIUM,
     LARGE,
+    TWO_PACK,
+    THREE_PACK,
     FOUR_PACK,
     SIX_PACK,
+    EIGHT_PACK,
+    TEN_PACK,
     FIVE_HUNDRED_GRAMS,
     UNASSIGNED;
 

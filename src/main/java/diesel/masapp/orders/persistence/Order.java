@@ -1,8 +1,9 @@
 package diesel.masapp.orders.persistence;
 
 import lombok.Data;
-import org.apache.tomcat.jni.Local;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,13 +13,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "CUSTOMER_ORDER")
 public class Order {
 
@@ -37,7 +38,7 @@ public class Order {
     private boolean delivered;
     private boolean paid;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<OrderLine> lines;
 
     public Order(final Customer customer, final LocalDateTime orderPlaced, final LocalDateTime orderConfirmed, final BigDecimal totalAmount,

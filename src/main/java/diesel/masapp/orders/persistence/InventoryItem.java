@@ -4,6 +4,7 @@ import diesel.masapp.orders.domain.ItemClassification;
 import diesel.masapp.orders.domain.ItemSize;
 import diesel.masapp.orders.domain.Product;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class InventoryItem {
 
     public static final String SEQUENCE_NAME = "inventory_item_seq";

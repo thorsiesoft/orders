@@ -1,6 +1,7 @@
 package diesel.masapp.orders.persistence;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class OrderLine {
 
     public static final String SEQUENCE_NAME = "order_line_seq";
@@ -25,11 +27,24 @@ public class OrderLine {
     private int quantity;
     @ManyToOne
     private ItemType type;
+    private boolean deboned;
+    private boolean skinned;
     private BigDecimal lineTotal;
 
     public OrderLine(final int quantity, final ItemType type, final BigDecimal lineTotal) {
         this.quantity = quantity;
         this.type = type;
         this.lineTotal = lineTotal;
+        this.deboned = false;
+        this.skinned = false;
+    }
+
+    public OrderLine(final int quantity, final ItemType type, final BigDecimal lineTotal,
+                     final boolean deboned, final boolean skinned) {
+        this.quantity = quantity;
+        this.type = type;
+        this.lineTotal = lineTotal;
+        this.deboned = deboned;
+        this.skinned = skinned;
     }
 }

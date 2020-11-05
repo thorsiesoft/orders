@@ -11,6 +11,7 @@ public class SubmittedInventory {
 
     private LocalDate batchDate;
     private int houseNumber;
+    private String store;
     private String itemClassification;
     private String productType;
     private String size;
@@ -43,5 +44,20 @@ public class SubmittedInventory {
         this.skinned = skinned;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public SubmittedInventory(final LocalDate batchDate, final int houseNumber, final String itemClassification, final String productType,
+                              final String size, final boolean deboned, final boolean skinned, final double price, final int quantity,
+                              final String store) {
+        this.batchDate = batchDate;
+        this.houseNumber = houseNumber;
+        this.itemClassification = itemClassification;
+        this.productType = productType;
+        this.size = size;
+        this.deboned = deboned;
+        this.skinned = skinned;
+        this.price = price;
+        this.quantity = quantity;
+        this.store = store;
     }
 }
